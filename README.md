@@ -25,7 +25,11 @@
   
   docker run -d --name sensitive -p 8888:8888 --mount "type=bind,src=data,dst=/sensitive/data" cccjinxing/sensitive
   
+  压缩编译词典文件之后会在data目录下生成dat.data
+  目前只提供检索服务，如需更新词典，修改darts.txt即可
+  
   curl http://localhost:8888/search?content=search%20content
+  
   [
     {
         "word": "a",

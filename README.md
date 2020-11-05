@@ -12,7 +12,9 @@
 词典文件结构
 等级 词
 例如：
+
 1 a
+
 6 c
 
 快速开始：
@@ -26,7 +28,8 @@
   docker run -d --name sensitive -p 8888:8888 --mount "type=bind,src=data,dst=/sensitive/data" cccjinxing/sensitive
   
   压缩编译词典文件之后会在data目录下生成dat.data
-  目前只提供检索服务，如需更新词典，修改darts.txt即可
+  
+  目前只提供检索服务，如需更新词典，修改darts.txt即可，然后重启容器，会自动更新
   
   curl http://localhost:8888/search?content=search%20content
   

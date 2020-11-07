@@ -8,10 +8,6 @@ package main
 
 import (
 	"errors"
-	"os"
-	"reflect"
-	"strings"
-	"time"
 )
 
 /**
@@ -189,7 +185,7 @@ func (d *DoubleArray) add(key string, level int) error {
 			abs = -abs
 		}
 		if abs != index { // 说明上一个字符和当前字符不是上下级关系
-			return d._addMove(index, key, level)
+			return d._addMove(key, level)
 		}
 		if k == len(keys) - 1 {//如果是最后一个字符
 			if d.Check[ind] > 0 { //查找到最后一个字符，但是还没到单个词的结尾

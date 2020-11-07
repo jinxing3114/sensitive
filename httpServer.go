@@ -2,11 +2,13 @@ package main
 
 import (
 	"encoding/json"
-	"fmt"
 	"net/http"
 	"strconv"
 )
 
+/**
+	基础返回值格式
+ */
 type baseResult struct {
 	Code int8   `json:"code"`
 	Msg  string `json:"msg"`
@@ -125,17 +127,18 @@ func remove(w http.ResponseWriter, r *http.Request) {
 	_ = r.ParseForm()
 	key := r.Form.Get("key")
 	w.Header().Set("Content-Type", "application/json; charset=utf-8")
+	result := baseResult{Code : 1, Msg : "ok"}
 	if len(key) <= 0 {
-		_, _ = fmt.Fprintf(w, "[\"err\":\"search content empty\"]")
-		return
+		result.Code = 0
+		result.Msg  = "key is empty"
+	} else {
+		err := dat.remove(key)
+		if err != nil {
+			result.Code = 0
+			result.Msg  = err.Error()
+		}
 	}
 
-	result := baseResult{Code : 1, Msg : "ok"}
-	err := dat.remove(key)
-	if err != nil {
-		result.Code = 0
-		result.Msg  = err.Error()
-	}
 	byteData, _ := json.Marshal(result)
 	_, _ = w.Write(byteData)
 }
@@ -144,7 +147,26 @@ func remove(w http.ResponseWriter, r *http.Request) {
 	添加词
  */
 func add(w http.ResponseWriter, r *http.Request) {
-
+	_ = r.ParseForm()
+	key := r.Form.Get("key")
+	level, _ := strconv.Atoi(r.Form.Get("level"))
+	w.Header().Set("Content-Type", "application/json; charset=utf-8")
+	result := baseResult{Code : 1, Msg : "ok"}
+	if len(key) <= 0 {
+		result.Code = 0
+		result.Msg  = "key is empty"
+	} else if level > 9 || level < 1 {
+		result.Code = 0
+		result.Msg  = "level not 1~9"
+	} else {
+		err := dat.add(key, level)
+		if err != nil {
+			result.Code = 0
+			result.Msg  = err.Error()
+		}
+	}
+	byteData, _ := json.Marshal(result)
+	_, _ = w.Write(byteData)
 }
 
 /**

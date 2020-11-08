@@ -33,7 +33,7 @@ func search(w http.ResponseWriter, r *http.Request) {
 	result := baseResult{Code : 1, Msg : "ok"}
 	if len(content) > 0 {
 		contentRune := []rune(content)
-		data := dat.search(content)
+		data := XT.Search(content)
 		if len(data) > 0 {
 			var resultData = make([]matchSearchJson, 0, len(data))
 			for i:=0;i<len(data);i++{
@@ -62,7 +62,7 @@ func prefix(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json; charset=utf-8")
 	result := baseResult{Code : 1, Msg : "ok"}
 	if len(key) > 0 {
-		data, err := dat.prefix(key, limit)
+		data, err := XT.Prefix(key, limit)
 		if err != nil {
 			var resultData = make([]matchSearchJson, 0, len(data))
 			for _,da := range data {
@@ -107,7 +107,7 @@ func perfect(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json; charset=utf-8")
 	result := baseResult{Code : 1, Msg : "ok"}
 	if len(key) > 0 {
-		_, _, _, err := dat.match(key, false)
+		_, _, err := XT.Match(key, false)
 		if err != nil {
 			result.Code = 0
 			result.Msg  = err.Error()
@@ -132,7 +132,7 @@ func remove(w http.ResponseWriter, r *http.Request) {
 		result.Code = 0
 		result.Msg  = "key is empty"
 	} else {
-		err := dat.remove(key)
+		err := XT.Remove(key)
 		if err != nil {
 			result.Code = 0
 			result.Msg  = err.Error()
@@ -159,7 +159,7 @@ func add(w http.ResponseWriter, r *http.Request) {
 		result.Code = 0
 		result.Msg  = "level not 1~9"
 	} else {
-		err := dat.add(key, level)
+		err := XT.Insert(key, level)
 		if err != nil {
 			result.Code = 0
 			result.Msg  = err.Error()

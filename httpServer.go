@@ -1,3 +1,6 @@
+// 敏感词服务http server
+// 绑定多个检索请求，处理多种检索模式
+
 package main
 
 import (
@@ -6,18 +9,14 @@ import (
 	"strconv"
 )
 
-/**
-	基础返回值格式
- */
+// 基础返回值格式
 type baseResult struct {
 	Code int8   `json:"code"`
 	Msg  string `json:"msg"`
 	Data interface{} `json:"data"`
 }
 
-/**
-	查找匹配
-*/
+// 查找匹配
 func search(w http.ResponseWriter, r *http.Request) {
 	_ = r.ParseForm()
 	content := r.Form.Get("content")
@@ -39,9 +38,7 @@ func search(w http.ResponseWriter, r *http.Request) {
 	_, _ = w.Write(byteData)
 }
 
-/**
-	前缀匹配请求处理
- */
+// 前缀匹配请求处理
 func prefix(w http.ResponseWriter, r *http.Request) {
 	_ = r.ParseForm()
 	key := r.Form.Get("key")
@@ -63,9 +60,7 @@ func prefix(w http.ResponseWriter, r *http.Request) {
 	_, _ = w.Write(byteData)
 }
 
-/**
-	后缀匹配请求处理
- */
+// 后缀匹配请求处理
 func suffix(w http.ResponseWriter, r *http.Request) {
 	_ = r.ParseForm()
 	key := r.Form.Get("key")
@@ -87,9 +82,7 @@ func suffix(w http.ResponseWriter, r *http.Request) {
 	_, _ = w.Write(byteData)
 }
 
-/**
-	模糊匹配请求处理
- */
+// 后缀匹配请求处理
 func fuzzy(w http.ResponseWriter, r *http.Request) {
 	_ = r.ParseForm()
 	key := r.Form.Get("key")
@@ -111,10 +104,8 @@ func fuzzy(w http.ResponseWriter, r *http.Request) {
 	_, _ = w.Write(byteData)
 }
 
-/**
-	完全匹配
- */
-func perfect(w http.ResponseWriter, r *http.Request) {
+// 词匹配
+func match(w http.ResponseWriter, r *http.Request) {
 	_ = r.ParseForm()
 	key := r.Form.Get("key")
 	w.Header().Set("Content-Type", "application/json; charset=utf-8")
@@ -133,9 +124,7 @@ func perfect(w http.ResponseWriter, r *http.Request) {
 	_, _ = w.Write(byteData)
 }
 
-/**
-	移除词
- */
+// 移除词
 func remove(w http.ResponseWriter, r *http.Request) {
 	_ = r.ParseForm()
 	key := r.Form.Get("key")
@@ -156,9 +145,7 @@ func remove(w http.ResponseWriter, r *http.Request) {
 	_, _ = w.Write(byteData)
 }
 
-/**
-	添加词
- */
+// 添加词
 func add(w http.ResponseWriter, r *http.Request) {
 	_ = r.ParseForm()
 	key := r.Form.Get("key")
@@ -184,16 +171,15 @@ func add(w http.ResponseWriter, r *http.Request) {
 
 /**
 	启动http服务,绑定请求方法等
-
 	@param addr string 监听地址和端口号。例如127.0.0.1:8888
 	@return nil
  */
 func startServe(addr string){
-	//删除词
-	http.HandleFunc("/delete", remove)
-
 	//添加词
 	http.HandleFunc("/add", add)
+
+	//删除词
+	http.HandleFunc("/delete", remove)
 
 	//查找匹配-不会词库中的词匹配
 	http.HandleFunc("/match/search", search)
@@ -208,7 +194,7 @@ func startServe(addr string){
 	http.HandleFunc("/match/fuzzy", fuzzy)
 
 	//完全匹配-
-	http.HandleFunc("/match/perfect", perfect)
+	http.HandleFunc("/match/match", match)
 
 	//启动监听http地址和端口
 	_ = http.ListenAndServe(addr, nil)

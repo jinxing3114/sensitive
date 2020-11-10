@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"github.com/jinxing3114/xtrie"
 )
 
@@ -26,8 +25,8 @@ func main(){
 例子
 */
 func example(){
-	index, level, err := XT.Match("番", false)
-	fmt.Println(index, level, err)
+	//index, level, err := XT.Match("番", false)
+	//fmt.Println(index, level, err)
 	//level, err, _, _ = dat.match("中", false)
 	//fmt.Println(level, err)
 	//sk := "我要测试一下"

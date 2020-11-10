@@ -1,2 +1,6 @@
-github.com/jinxing3114/xtrie v0.0.0-20201108172750-a98465670fac h1:H26U2KVzyI62gf3Ha5Z0s1OY+91B2+UOvApxFutr3EM=
-github.com/jinxing3114/xtrie v0.0.0-20201108172750-a98465670fac/go.mod h1:W4ytyvXRvhxgh9pFksikuqcwa/XG5WEQtuZxaBB0Dpc=
+github.com/jinxing3114/xtrie v0.0.0-20201109032316-0531b9c209b2 h1:O4GREPbAoBHPwZzoxv4TUKOrK0xZ8UmsYWpy4kzHyEA=
+github.com/jinxing3114/xtrie v0.0.0-20201109032316-0531b9c209b2/go.mod h1:W4ytyvXRvhxgh9pFksikuqcwa/XG5WEQtuZxaBB0Dpc=
+github.com/jinxing3114/xtrie v0.0.0-20201109085723-c50242eada6b h1:HOFeT2QixPzO0M97owGB4jg0drlxQNLya4oGTREjDS4=
+github.com/jinxing3114/xtrie v0.0.0-20201109085723-c50242eada6b/go.mod h1:W4ytyvXRvhxgh9pFksikuqcwa/XG5WEQtuZxaBB0Dpc=
+github.com/jinxing3114/xtrie v0.0.0-20201110081145-c2152270e6bc h1:apydsCstaEPyHY9RVNo1zp+ErMjZjk07YaafOnTgHIE=
+github.com/jinxing3114/xtrie v0.0.0-20201110081145-c2152270e6bc/go.mod h1:W4ytyvXRvhxgh9pFksikuqcwa/XG5WEQtuZxaBB0Dpc=

@@ -16,14 +16,6 @@ type baseResult struct {
 }
 
 /**
-	http服务返回json结构
-*/
-type matchSearchJson struct {
-	Word string	`json:"word"`
-	Level int	`json:"level"`
-}
-
-/**
 	查找匹配
 */
 func search(w http.ResponseWriter, r *http.Request) {
@@ -32,14 +24,9 @@ func search(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json; charset=utf-8")
 	result := baseResult{Code : 1, Msg : "ok"}
 	if len(content) > 0 {
-		contentRune := []rune(content)
 		data := XT.Search(content)
 		if len(data) > 0 {
-			var resultData = make([]matchSearchJson, 0, len(data))
-			for i:=0;i<len(data);i++{
-				resultData = append(resultData, matchSearchJson{string(contentRune[data[i][0]:data[i][1] + 1]), data[i][2]})
-			}
-			result.Data = resultData
+			result.Data = data
 		} else {
 			result.Code = 1
 			result.Msg  = "result is empty"
@@ -64,38 +51,64 @@ func prefix(w http.ResponseWriter, r *http.Request) {
 	if len(key) > 0 {
 		data, err := XT.Prefix(key, limit)
 		if err != nil {
-			var resultData = make([]matchSearchJson, 0, len(data))
-			for _,da := range data {
-				resultData = append(resultData, matchSearchJson{Word: string(da)})
-			}
-			for i:=0;i<len(data);i++{
-			}
-			result.Data = resultData
+			result.Data = data
 			result.Code = 0
 			result.Msg  = err.Error()
 		}
-
 	} else {
 		result.Code = 0
 		result.Msg  = "match key is empty"
 	}
 	byteData, _ := json.Marshal(result)
 	_, _ = w.Write(byteData)
-
 }
 
 /**
 	后缀匹配请求处理
  */
 func suffix(w http.ResponseWriter, r *http.Request) {
-
+	_ = r.ParseForm()
+	key := r.Form.Get("key")
+	limit, _ := strconv.Atoi(r.Form.Get("limit"))
+	w.Header().Set("Content-Type", "application/json; charset=utf-8")
+	result := baseResult{Code : 1, Msg : "ok"}
+	if len(key) > 0 {
+		data, err := XT.Suffix(key, limit)
+		if err != nil {
+			result.Data = data
+			result.Code = 0
+			result.Msg  = err.Error()
+		}
+	} else {
+		result.Code = 0
+		result.Msg  = "match key is empty"
+	}
+	byteData, _ := json.Marshal(result)
+	_, _ = w.Write(byteData)
 }
 
 /**
 	模糊匹配请求处理
  */
 func fuzzy(w http.ResponseWriter, r *http.Request) {
-
+	_ = r.ParseForm()
+	key := r.Form.Get("key")
+	limit, _ := strconv.Atoi(r.Form.Get("limit"))
+	w.Header().Set("Content-Type", "application/json; charset=utf-8")
+	result := baseResult{Code : 1, Msg : "ok"}
+	if len(key) > 0 {
+		data, err := XT.Fuzzy(key, limit)
+		if err != nil {
+			result.Data = data
+			result.Code = 0
+			result.Msg  = err.Error()
+		}
+	} else {
+		result.Code = 0
+		result.Msg  = "match key is empty"
+	}
+	byteData, _ := json.Marshal(result)
+	_, _ = w.Write(byteData)
 }
 
 /**

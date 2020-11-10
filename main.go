@@ -5,7 +5,22 @@ import (
 	"github.com/jinxing3114/xtrie"
 )
 
+//创建XTrie
 var XT = new(xtrie.XTrie)
+
+//基本配置信息
+var storeFile,dictFile = "data/dat.data", "data/darts.txt"
+
+/**
+入口函数
+*/
+func main(){
+	XT.InitHandle(storeFile, dictFile)
+	//example()
+	//开始监听请求
+	startServe(":8888")
+}
+
 
 /**
 例子
@@ -22,24 +37,4 @@ func example(){
 	//for i:=0;i<len(result);i++{
 	//	fmt.Println("str:", string(contentRune[result[i][0]:result[i][1] + 1]), "level", result[i][2])
 	//}
-}
-
-var storeFile,dictFile = "", ""
-
-/**
-入口函数
-*/
-func main(){
-	//storeFile := "data/dat.data"
-	//dictFile  := "data/darts.txt"
-	if len(storeFile) == 0 {
-		storeFile = "data/dat.data"
-	}
-	if len(dictFile) == 0 {
-		dictFile = "data/darts.txt"
-	}
-	XT.InitHandle(storeFile, dictFile)
-	example()
-	//开始监听请求
-	//startServe(":8888")
 }
